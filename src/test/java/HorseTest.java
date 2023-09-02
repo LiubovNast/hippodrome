@@ -34,13 +34,13 @@ class HorseTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"", "   ", "/n/n/n"})
+        @ValueSource(strings = {"", "   ", "\n\n\n"})
         void exceptionIfFirstParamBlank(String name) {
             assertThrows(IllegalArgumentException.class, () -> new Horse(name, 1.1));
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"", "   ", "/n/n/n"})
+        @ValueSource(strings = {"", "   ", "\n\n\n"})
         void textExceptionIfFirstParamBlank(String name) {
             try {
                 new Horse(name, 1.1);
@@ -110,16 +110,12 @@ class HorseTest {
         }
     }
     @ParameterizedTest
-    @CsvSource({
-            "1.1, 5",
-            "2.1, 3.1",
-            "3.4, 2"
-    })
-    void checkGetRandomDouble(double distance, double speed) {
+    @ValueSource(strings = {"0.5", "0.7", "0.3"})
+    void checkGetRandomDouble(double random) {
         try(MockedStatic<Horse> horseMocked = Mockito.mockStatic(Horse.class)) {
-            when(Horse.getRandomDouble(0.2, 0.9)).thenReturn(0.5);
-            double result = distance + speed * 0.5;
-            Horse horse = new Horse("Jack", speed, distance);
+            when(Horse.getRandomDouble(0.2, 0.9)).thenReturn(random);
+            Horse horse = new Horse("Jack", 1.1);
+            double result = 0 + 1.1 * random;
             horse.move();
             assertEquals(result, horse.getDistance());
         }

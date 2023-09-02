@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class HippodromeTest {
     @Nested
@@ -50,7 +52,16 @@ class HippodromeTest {
     }
 
     @Test
-    void move() {
+    void allHorsesMove() {
+            List<Horse> horses = new ArrayList<>();
+            for (int i = 0; i < 50; i++) {
+                horses.add(mock(Horse.class));
+            }
+            new Hippodrome(horses).move();
+            for (int i = 0; i < 50; i++) {
+                Horse horse = horses.get(i);
+                verify(horse).move();
+            }
     }
 
     @Test
